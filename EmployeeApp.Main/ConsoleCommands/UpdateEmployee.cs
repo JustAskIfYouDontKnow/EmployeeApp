@@ -19,7 +19,8 @@ internal sealed class UpdateEmployee
 
     public void Execute(CommandLineApplication app)
     {
-        app.Description = "Update user data by ID\n  Usage: update -id <int> -firstName <string> -lastName <string> -salary <decimal>\n";
+        app.Description =
+            "Update user data by ID\n  Usage: update -id <int> -firstName <string> -lastName <string> -salary <decimal>\n";
 
         var idOption = app.Option("-id", "Id", CommandOptionType.SingleValue);
         var firstNameOption = app.Option("-firstName", "FirstName", CommandOptionType.SingleValue);
@@ -42,11 +43,14 @@ internal sealed class UpdateEmployee
                     if (decimal.TryParse(salaryOption.Value(), out var salaryDecimal))
                     {
                         salary = salaryDecimal;
+                    } else
+                    {
+                        _logger.LogWarning("\nSalary format must be decimal. Salary was not updated\n");
                     }
 
                     await _employeeService.UpdateEmployee(idInt, firstNameOption.Value(), lastNameOption.Value(), salary);
 
-                   _logger.LogInformation($"Employee with Id {idInt} successfully updated");
+                    _logger.LogInformation($"\nEmployee with Id {idInt} successfully updated");
 
                     return 0;
                 }

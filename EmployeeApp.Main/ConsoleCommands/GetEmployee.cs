@@ -27,7 +27,7 @@ namespace EmployeeApp.Main.ConsoleCommands
                     {
                         if (!int.TryParse(idOption.Value(), out var idInt))
                         {
-                            _logger.LogError("Id format must be int.");
+                            _logger.LogError("\nId format must be int.\n");
                             return 1;
                         }
 
